@@ -1,0 +1,73 @@
+For Metrics Server Setup:
+
+$ git clone https://github.com/websurf500/K8s_HPA_Metrics_Server.git
+-----------------------------------------------------------------------
+
+$ vi hpa-deployment
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hpa-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      color: blue
+  template:
+    metadata:
+      name: hpa-deployment-pod
+      labels:
+        color: blue
+    spec:
+      containers:
+        - name: hpa-deployment-container
+          image: k8s.gcr.io/hpa-example
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hpa-deployment-svc
+spec:
+  selector:
+    color: blue
+  ports:
+    - port: 80
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-deployment-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hpa-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+...
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+For Load Test:
+
+kubectl run -i --tty load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://hpa-deployment-svc; done"
+
+
+
+
+
+
+
