@@ -1,0 +1,34 @@
+$ vi pod-manifest.yml
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+ name: javawebappod
+ labels:
+  app: javawebapp
+spec:
+ containers:
+ - name: javawebappcontainer
+   image: vinodses/my-web-app
+   ports:
+   - containerPort: 8080
+...
+
+---------------------------
+
+$ vi service-manifest.yml
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: javawebappsvc
+spec:
+ type: LoadBalancer
+ selector:
+  app: javawebapp
+ ports:
+ - port: 80
+   targetPort: 8080
+...

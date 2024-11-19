@@ -1,0 +1,50 @@
+EFK Stack
+---------
+https://github.com/suffixscope/efkstack.git
+
+vi EFK_Deployment.yml
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: sbwebappdeplyment
+spec:
+ replicas: 2
+ strategy:
+  type: RollingUpdate
+ selector:
+  matchLabels:
+   app: my-web-app
+ template:
+  metadata:
+   name: sbwebapppod
+   labels:
+    app: my-web-app
+    version: v1
+    color: blue
+  spec:
+   containers:
+   - name: sbwebappcontainer
+     image: vinodses/my-web-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: sbappsvc
+spec:
+ type: LoadBalancer
+ selector:
+  app: my-web-app
+ ports:
+  - port: 80
+    targetPort: 8080
+
+...
+
+
+
+
+
+
+
