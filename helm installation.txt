@@ -28,4 +28,9 @@ $ helm
 
 $ helm repo ls
 
+----------------------
+
+Adding Helm repositories to Helm client:
+
+helm repo add stable https://charts.helm.sh/stable
 
