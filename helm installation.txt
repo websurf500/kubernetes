@@ -1,0 +1,31 @@
+HELM Client Installation
+-------------------------
+
+Step 1:
+
+curl -fsSl -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+
+This command silently downloads a script named "get_helm-3" from the Helm project on GitHub and saves it as "get_helm.sh" on your local machine.
+
+
+Step 2:
+
+chmod 700 get_helm.sh
+
+Make the script executable by providing full permission to the owner of the file.
+
+
+Step 3:
+
+./get_helm.sh
+
+Run the above script to install Helm 3 on your system
+
+
+Try checking commands:
+ 
+$ helm
+
+$ helm repo ls
+
+
